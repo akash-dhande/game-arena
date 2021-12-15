@@ -1,0 +1,35 @@
+.card {
+    margin-bottom: 2rem;
+    .card-header {
+        @media screen and (max-width: 800px) {
+            .input-group {
+                flex-direction: column;
+                .form-control {
+                    width: 100%;
+                    margin-bottom: 0.2rem;
+                    
+                }
+            }
+        }
+    }
+}
+.game-card {
+    padding: 0.2rem;
+    color: #333;
+    box-shadow: 0 0 8px #b1b1b1;
+    height: calc(100% - 2rem);
+    .card-title {
+        padding: 0;
+        font-weight: 700;
+    }
+    .card-body {
+        padding: 0.5rem;
+        font-size: 0.9rem;
+    }
+    .card-footer {
+        padding: 0.5rem;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+}

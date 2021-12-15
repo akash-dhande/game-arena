@@ -1,28 +1,52 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+    <div class="container">
+      <h1>Game Arena</h1>
+      <GameList v-if="!loading && !error" :games="games" />
+      <div v-if="loading">Loading Games Please Wait...</div>
+      <div v-if="error">Something Went Wrong, Please Try Again!</div>
+    </div>
   </div>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import axios from 'axios';
+import GameList from './components/GameList.vue';
 
 export default {
   name: 'App',
+  data() {
+    return {
+      loading: false,
+      error: false,
+      games: [],
+    };
+  },
   components: {
-    HelloWorld
-  }
-}
+    GameList,
+  },
+  created() {
+    this.fetchGames();
+  },
+  methods: {
+    async fetchGames() {
+      this.loading = true;
+      try {
+        let response = await axios.get(
+          'https://s3-ap-southeast-1.amazonaws.com/he-public-data/gamesarena274f2bf.json'
+        );
+        this.games = response.data;
+        this.loading = false;
+      } catch {
+        this.loading = false;
+        this.error = true;
+      }
+    },
+  },
+};
 </script>
 
 <style lang="scss">
-#app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
-}
+@import '~bootstrap/dist/css/bootstrap.css';
+@import './assets/styles/style.scss';
 </style>
