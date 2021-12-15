@@ -45,7 +45,11 @@ export default {
   },
   methods: {
     updateSearch(val) {
-      this.onChange(val);
+      let timer;
+      timer = setTimeout(() => {
+        clearTimeout(timer);
+        this.onChange(val);
+      }, 100);
     },
     hideAutocomplete() {
       setTimeout(() => {

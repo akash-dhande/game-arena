@@ -4,7 +4,7 @@
       <div class="input-group">
         <Autocomplete :onChange="(data) => (search = data)" :options="games" />
         <select v-model="platform" class="form-control">
-          <option value="null" selected>Filter Platform</option>
+          <option :value="null" selected>Filter Platform</option>
           <option v-for="platform of platforms" :value="platform">
             {{ platform }}
           </option>
