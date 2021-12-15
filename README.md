@@ -14,6 +14,5 @@ yarn serve
 ```
 yarn build
 ```
+![image](https://user-images.githubusercontent.com/10880157/146165031-9efca557-c173-4d4f-a78f-120fbc8325c8.png)
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
