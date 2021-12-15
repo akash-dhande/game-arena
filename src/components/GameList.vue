@@ -2,23 +2,21 @@
   <div class="card">
     <div class="card-header">
       <div class="input-group">
-        <input
-          v-model="search"
-          placeholder="Search Game by Name"
-          class="form-control"
-          type="search"
-        />
+        <Autocomplete :onChange="(data) => (search = data)" :options="games" />
         <select v-model="platform" class="form-control">
           <option value="null" selected>Filter Platform</option>
           <option v-for="platform of platforms" :value="platform">
             {{ platform }}
           </option>
         </select>
-        <div class="input-group-append">
+        <div class="input-group-append button-group">
           <button class="btn btn-primary" @click="toggleSortbyScore">
             Sort by Score ({{
               !sort ? 'default' : sort === 'asc' ? 'ASC' : 'DSEC'
             }})
+          </button>
+          <button class="btn btn-secondary" @click="clearFilter">
+            Clear Filter
           </button>
         </div>
       </div>
@@ -26,18 +24,22 @@
     <div class="card-body">
       <div class="row">
         <div
-          class="col-md-4 col-sm-6"
+          class="col-lg-4 col-md-6"
           v-for="(game, index) of filteredGames"
           :key="index"
         >
           <GameCard :game="game" />
         </div>
       </div>
+      <div v-if="filteredGames.length < 1" class="no-data-found">
+        No game found.
+      </div>
     </div>
   </div>
 </template>
 <script>
 import GameCard from './GameCard.vue';
+import Autocomplete from './ui/Autocomplete.vue';
 export default {
   data() {
     return {
@@ -47,6 +49,7 @@ export default {
     };
   },
   components: {
+    Autocomplete,
     GameCard,
   },
   props: {
@@ -62,7 +65,7 @@ export default {
     filteredGames() {
       let term = this.search ? this.search.toLowerCase() : '';
       let filtered = this.games.filter((game) => {
-        let titleTerm = game.title && game.title.toLowerCase().includes(term);
+        let titleTerm = game.title.toLowerCase().includes(term);
         let platformTerm = this.platform
           ? game.platform === this.platform
           : true;
@@ -77,8 +80,15 @@ export default {
     },
   },
   methods: {
+    updateSearch(data) {
+      this.search = data;
+    },
     toggleSortbyScore() {
       this.sort = this.sort === 'asc' ? 'dsec' : 'asc';
+    },
+    clearFilter() {
+      this.search = '';
+      this.platform = null;
     },
   },
 };

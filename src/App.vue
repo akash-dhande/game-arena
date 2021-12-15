@@ -35,7 +35,7 @@ export default {
         let response = await axios.get(
           'https://s3-ap-southeast-1.amazonaws.com/he-public-data/gamesarena274f2bf.json'
         );
-        this.games = response.data;
+        this.games = response.data.filter((game) => game.title);
         this.loading = false;
       } catch {
         this.loading = false;
